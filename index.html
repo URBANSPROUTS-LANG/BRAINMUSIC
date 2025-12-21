@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Brain Music Player</title>
+</head>
+<body>
+
+<h2>Brain Music Player (Step by Step)</h2>
+
+<!-- STEP 1 -->
+<div id="step1">
+  <p>Step 1: Choose what you want:</p>
+  <button onclick="goStep2('focus')">Focus / Study</button>
+  <button onclick="goStep2('relax')">Relax</button>
+  <button onclick="goStep2('sleep')">Sleep</button>
+</div>
+
+<!-- STEP 2 -->
+<div id="step2" style="display:none;">
+  <p id="step2text"></p>
+  <button id="btn1"></button>
+  <button id="btn2"></button>
+</div>
+
+<br>
+<!-- YouTube Embed -->
+<div id="player"></div>
+
+<script>
+  // Replace with your actual YouTube video IDs
+  const ytMap = {
+    focus: "FOCUS_VIDEO_ID",
+    relax: "https://www.youtube.com/watch?v=zqS_Ra4nt6Y",
+    sleep_day: "SLEEP_DAY_ID",
+    sleep_night: "SLEEP_NIGHT_ID"
+  };
+
+  function goStep2(choice) {
+    document.getElementById("step1").style.display = "none";
+    const step2Div = document.getElementById("step2");
+    step2Div.style.display = "block";
+
+    const text = document.getElementById("step2text");
+    const b1 = document.getElementById("btn1");
+    const b2 = document.getElementById("btn2");
+
+    b2.style.display = "inline-block";
+
+    if(choice === "sleep") {
+      text.innerText = "Step 2: Choose Sleep type";
+      b1.innerText = "Day Sleep";
+      b2.innerText = "Night Sleep";
+
+      b1.onclick = () => playVideo("sleep_day");
+      b2.onclick = () => playVideo("sleep_night");
+    } else {
+      text.innerText = "Step 2: Play Audio";
+      b1.innerText = "Play";
+      b2.style.display = "none";
+      b1.onclick = () => playVideo(choice);
+    }
+  }
+
+  function playVideo(choice) {
+    const videoId = ytMap[choice];
+    if(!videoId) { alert("Video not found!"); return; }
+
+    document.getElementById("player").innerHTML = `
+      <iframe width="560" height="315"
+      src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+      title="Brain Music"
+      frameborder="0"
+      allow="autoplay; encrypted-media" allowfullscreen>
+      </iframe>`;
+  }
+</script>
+
+</body>
+</html>
