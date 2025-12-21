@@ -1,79 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Brain Music Player</title>
+<meta charset="UTF-8">
+<title>BrainMusic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  :root {
+    --bg: #05070f;
+    --panel: rgba(255,255,255,0.04);
+    --glow: #38bdf8;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background:
+      radial-gradient(circle at top, #0f172a, #020617 60%);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .app {
+    width: 340px;
+    padding: 28px;
+    border-radius: 24px;
+    background: var(--panel);
+    backdrop-filter: blur(20px);
+    box-shadow:
+      0 0 40px rgba(56,189,248,0.15),
+      inset 0 0 0 1px rgba(255,255,255,0.06);
+    text-align: center;
+  }
+
+  .logo {
+    font-size: 26px;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+
+  .subtitle {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .orb {
+    margin: 32px auto;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, #7dd3fc, #0ea5e9, #020617);
+    box-shadow:
+      0 0 30px rgba(56,189,248,0.6),
+      0 0 80px rgba(56,189,248,0.3);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #020617;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(56,189,248,0.6);
+  }
+
+  button:hover {
+    filter: brightness(1.1);
+  }
+
+  .hint {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* 🔒 Hide YouTube completely */
+  #ytplayer {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+</style>
 </head>
+
 <body>
 
-<h2>Brain Music Player (Step by Step)</h2>
+<div class="app">
+  <div class="logo">BRAINMUSIC</div>
+  <div class="subtitle">Neural focus audio</div>
 
-<!-- STEP 1 -->
-<div id="step1">
-  <p>Step 1: Choose what you want:</p>
-  <button onclick="goStep2('focus')">Focus / Study</button>
-  <button onclick="goStep2('relax')">Relax</button>
-  <button onclick="goStep2('sleep')">Sleep</button>
+  <div class="orb"></div>
+
+  <button onclick="play()">▶ Begin Session</button>
+
+  <div class="hint">
+    Keep this tab open for continuous sound
+  </div>
 </div>
 
-<!-- STEP 2 -->
-<div id="step2" style="display:none;">
-  <p id="step2text"></p>
-  <button id="btn1"></button>
-  <button id="btn2"></button>
-</div>
-
-<br>
-<!-- YouTube Embed -->
-<div id="player"></div>
+<iframe
+  id="ytplayer"
+  src=""
+  frameborder="0"
+  allow="autoplay; encrypted-media">
+</iframe>
 
 <script>
-  // Replace with your actual YouTube video IDs
-  const ytMap = {
-    focus: "FOCUS_VIDEO_ID",
-    relax: "zqS_Ra4nt6Y",
-    sleep_day: "SLEEP_DAY_ID",
-    sleep_night: "SLEEP_NIGHT_ID"
-  };
+function play() {
+  const videoId = "zqS_Ra4nt6Y&t";
 
-  function goStep2(choice) {
-    document.getElementById("step1").style.display = "none";
-    const step2Div = document.getElementById("step2");
-    step2Div.style.display = "block";
-
-    const text = document.getElementById("step2text");
-    const b1 = document.getElementById("btn1");
-    const b2 = document.getElementById("btn2");
-
-    b2.style.display = "inline-block";
-
-    if(choice === "sleep") {
-      text.innerText = "Step 2: Choose Sleep type";
-      b1.innerText = "Day Sleep";
-      b2.innerText = "Night Sleep";
-
-      b1.onclick = () => playVideo("sleep_day");
-      b2.onclick = () => playVideo("sleep_night");
-    } else {
-      text.innerText = "Step 2: Play Audio";
-      b1.innerText = "Play";
-      b2.style.display = "none";
-      b1.onclick = () => playVideo(choice);
-    }
-  }
-
-  function playVideo(choice) {
-    const videoId = ytMap[choice];
-    if(!videoId) { alert("Video not found!"); return; }
-
-    document.getElementById("player").innerHTML = `
-      <iframe width="560" height="315"
-      src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-      title="Brain Music"
-      frameborder="0"
-      allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>`;
-  }
+  document.getElementById("ytplayer").src =
+    "https://www.youtube.com/embed/" + videoId +
+    "?autoplay=1&loop=1&playlist=" + videoId +
+    "&controls=0&modestbranding=1";
+}
 </script>
 
 </body>
