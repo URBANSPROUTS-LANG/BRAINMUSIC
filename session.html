@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Session</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <button class="back" onclick="history.back()">←</button>
+  <span id="title"></span>
+</header>
+
+<div class="wave"></div>
+
+<p class="hint">
+  Audio opens in a new tab for uninterrupted playback.
+</p>
+
+<div id="tracks" class="track-grid"></div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const mode = params.get("mode");
+document.getElementById("title").textContent = mode.toUpperCase();
+
+/* 🎧 TRACK DATA (ZOHO MODE) */
+cconst data = {
+  relax: [
+    {
+      name: "Ice Worlds (60 min)",
+      url: "https://workdrive.zoho.in/file/2ra2ha10e97e3905c4a57ba18cf0e5d60e8ec"
+    },
+    {
+      name: "Atmospheric Travel (15 min)",
+      url: "https://workdrive.zoho.in/file/2ra2hbb305ea823c244058bbe40265b0fcb46"
+    },
+    {
+      name: "Phosphorescence (15 min)",
+      url: "https://workdrive.zoho.in/file/2ra2ha14fb5147e114f4d87241d10aa83e7d7"
+    },
+    {
+      name: "Fundamentals Chill (15 min)",
+      url: "https://workdrive.zoho.in/file/2ra2h10e102a86eda4e26b1e74856a2d57af0"
+    },
+    {
+      name: "Lexicon Unwind (30 min)",
+      url: "https://workdrive.zoho.in/file/2ra2hfb1f4833425a4b298c76053f06e53a62"
+    },
+    {
+      name: "Chrysalis Multitask",
+      url: "https://workdrive.zoho.in/file/2ra2heb7904342ce941a0be12e2a22fb4c1fd"
+    },
+    {
+      name: "Relax – Short Break (5 min)",
+      url: "https://workdrive.zoho.in/file/2ra2h43e974a9e91c4fd8931793aab5cd7f0a"
+    }
+  ],
+
+  focus: [
+    {
+      name: "Rain Drops (30 min)",
+      url: "https://workdrive.zoho.in/file/2ra2h690f3d2f386d4ac98355e99c0b8539cd"
+    },
+    {
+      name: "Harp & Flute (30 min)",
+      url: "https://workdrive.zoho.in/file/2ra2h0b657d90606046c98e3c8ea1d8c70f3e"
+    },
+    {
+      name: "Clouds Piano",
+      url: "https://workdrive.zoho.in/file/2ra2hd78e8eedc3944f179e9652026c5ee4d0"
+    },
+    {
+      name: "Initiation – Deep Work",
+      url: "https://workdrive.zoho.in/file/2ra2he349cadebbe146b58598f6fd95f50f89"
+    },
+    {
+      name: "Remnants – High Focus",
+      url: "https://workdrive.zoho.in/file/2ra2h0630455836d14a6588307997dcbbc945"
+    }
+  ],
+
+  sleep: [
+    {
+      name: "Perigee – Deep Sleep (60 min)",
+      url: "https://workdrive.zoho.in/file/2ra2ha8d8278dc0e54e2583d10a4486b24ea5"
+    },
+    {
+      name: "Bathed in Neon (15 min)",
+      url: "https://workdrive.zoho.in/file/2ra2hedfb022d780f4388b6479ce6d31a4cba"
+    },
+    {
+      name: "Drifting in the Sky's Embrace",
+      url: "https://workdrive.zoho.in/file/2ra2h273e87bf7dec4220909d8b1a9e351977"
+    },
+    {
+      name: "Drifting Away – Deep Sleep",
+      url: "https://workdrive.zoho.in/file/2ra2h9d272962aac8471485958a5a9bcdc535"
+    },
+    {
+      name: "Delta Brainwave Sleep",
+      url: "https://workdrive.zoho.in/file/2ra2hadf53c3814e54d75a72c7f643c89392a"
+    }
+  ],
+
+  meditation: [
+    {
+      name: "Self Belief (Guided)",
+      url: "https://workdrive.zoho.in/file/2ra2h38ddfb88e27c4a3490e270371ae74f24"
+    },
+    {
+      name: "Cause & Effect (Unguided)",
+      url: "https://workdrive.zoho.in/file/2ra2haebd6690d7204704b9163404de252f66"
+    },
+    {
+      name: "Deep Reflection (30 min)",
+      url: "https://workdrive.zoho.in/file/2ra2hb943e0ff57614d739f55acc17f045e9c"
+    }
+  ],
+
+  study: [
+    {
+      name: "Study Session 1",
+      url: "https://workdrive.zoho.in/file/2ra2ha3acdc4bf1b5477b9e13e323c14bf662"
+    },
+    {
+      name: "Study Session 2",
+      url: "https://workdrive.zoho.in/file/2ra2hc3836ac06b4843038a6a66c3dd16ee45"
+    },
+    {
+      name: "Study Session 3",
+      url: "https://workdrive.zoho.in/file/2ra2hefbf899fc6e44385bbe5926838819dc7"
+    }
+  ]
+};
+
+
+const container = document.getElementById("tracks");
+
+data[mode].forEach(track => {
+  const card = document.createElement("div");
+  card.className = "track";
+  card.innerHTML = `<strong>${track.name}</strong><br><span>Open session</span>`;
+  card.onclick = () => openTrack(track);
+  container.appendChild(card);
+});
+
+function openTrack(track) {
+  window.open(track.url, "_blank", "noopener,noreferrer");
+}
+</script>
+
+</body>
+</html>
